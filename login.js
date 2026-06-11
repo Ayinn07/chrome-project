@@ -342,7 +342,7 @@ function handlePasswordSubmit() {
                     const { shell } = window.require('electron');
                     shell.openExternal(targetLink);
                 } else {
-                    window.location.href = "main.html";
+                    window.location.href = "google.com";
                 }
             }, 2000);
         }
