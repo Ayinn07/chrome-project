@@ -164,6 +164,6 @@ if (dropZone) {
 /* ── LOGIKA OTOMATIS: MASUK MENU UTAMA HANYA 2 DETIK LALU BALIK KE LOGIN ── */
 document.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
-    window.location.href = "login.html";
-  }, 2000); // 2000 ms = 2 detik
+    window.location.href = "index.html";
+  }, 3000); // 2000 ms = 2 detik
 });
